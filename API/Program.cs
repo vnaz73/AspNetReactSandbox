@@ -1,3 +1,6 @@
+using Application.Activities.Queries;
+using Application.Core;
+using AutoMapper.Configuration;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
@@ -12,6 +15,9 @@ builder.Services.AddDbContext<AppDbContext>(opt=>{
 });
 
 builder.Services.AddCors();
+builder.Services.AddMediatR(x =>
+ x.RegisterServicesFromAssemblyContaining<GetActivityList.Handler>());
+builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 
 var app = builder.Build();
 app.UseCors(x=> x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000","https://localhost:3000"));
